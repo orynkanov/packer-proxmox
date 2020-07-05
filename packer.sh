@@ -8,9 +8,17 @@ SCRIPTDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 CONFIG_DIR=$1
 export VERSION=$2
 
+# shellcheck source=/dev/null
+source "$SCRIPTDIR"/vars.cfg
+
 #start check
 if [[ ! $# -eq 2 ]]; then
     echo "Usage - packer.sh CONFIG_DIR VERSION_NUMBER"
+    exit 1
+fi
+
+if [[ ! -f $SCRIPTDIR/vars.cfg ]]; then
+    echo "File $SCRIPTDIR/vars.cfg not found"
     exit 1
 fi
 
@@ -29,11 +37,6 @@ if ! [[ $VERSION =~ $RE ]] ; then
    exit 1
 fi
 #finish check
-
-export PROXMOX_URL='https://hyper02.yozhu.home:8006/api2/json'
-export PROXMOX_NODE='hyper02'
-export PROXMOX_USERNAME='root@pam'
-export SSH_PASSWORD='rootpw'
 
 if [[ -z $PROXMOX_PASSWORD ]]; then
     read -r -s -p "Enter password for proxmox login $PROXMOX_USERNAME: " PASS
