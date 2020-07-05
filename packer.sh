@@ -30,8 +30,8 @@ if ! [[ $VERSION =~ $RE ]] ; then
 fi
 #finish check
 
-export PROXMOX_URL='https://hyper01.yozhu.home:8006/api2/json'
-export PROXMOX_NODE='hyper01'
+export PROXMOX_URL='https://hyper02.yozhu.home:8006/api2/json'
+export PROXMOX_NODE='hyper02'
 export PROXMOX_USERNAME='root@pam'
 export SSH_PASSWORD='rootpw'
 
