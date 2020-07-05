@@ -1,0 +1,46 @@
+install
+cdrom
+
+skipx
+#graphical
+text
+
+firstboot --disable
+
+clearpart --all --initlabel
+ignoredisk --only-use=sda
+keyboard --vckeymap=us --xlayouts='us'
+lang en_US.UTF-8 --addsupport=ru_RU.UTF-8
+
+network  --bootproto=dhcp --device=eth0 --noipv6 --activate
+network  --hostname=tmplcentos8
+
+repo --name="AppStream" --baseurl=file:///run/install/repo/AppStream
+
+rootpw --plaintext %ROOTPW%
+
+selinux --disabled
+
+services --enabled="chronyd"
+timezone Asia/Almaty --isUtc --ntpservers=0.centos.pool.ntp.org,1.centos.pool.ntp.org,2.centos.pool.ntp.org,3.centos.pool.ntp.org
+
+bootloader --append=" crashkernel=auto" --location=mbr --boot-drive=sda
+part /boot --fstype="ext4" --ondisk=sda --size=1024
+part swap --fstype="swap" --ondisk=sda --size=2048
+part / --fstype="ext4" --ondisk=sda --grow
+reboot
+
+%packages
+@^minimal-environment
+@guest-agents
+kexec-tools
+%end
+
+%addon com_redhat_kdump --enable --reserve-mb='auto'
+%end
+
+%anaconda
+pwpolicy root --minlen=6 --minquality=1 --notstrict --nochanges --notempty
+pwpolicy user --minlen=6 --minquality=1 --notstrict --nochanges --emptyok
+pwpolicy luks --minlen=6 --minquality=1 --notstrict --nochanges --notempty
+%end

@@ -1,0 +1,109 @@
+{
+  "variables": {
+    "proxmox_url": "{{env `PROXMOX_URL`}}",
+    "proxmox_username": "{{env `PROXMOX_USERNAME`}}",
+    "proxmox_password": "{{env `PROXMOX_PASSWORD`}}",
+    
+    "proxmox_node": "hyper01",
+
+    "http_directory": "centos7",
+
+    "proxmox_storage_pool": "zfs",
+    "proxmox_storage_pool_type": "zfspool",
+    "proxmox_storage_format": "raw",
+
+    "proxmox_iso_pool": "local:iso",
+    "iso_file": "{{env `ISO_FILE`}}",
+
+    "vm_name": "vmtmplcentos7",
+    "vm_id_base": "500",
+
+    "template_name": "tmplcentos7",
+    "template_description": "centos 7",
+    "version": "{{env `VERSION`}}",
+
+    "ssh_password": "{{env `SSH_PASSWORD`}}"
+  },
+
+  "sensitive-variables": ["proxmox_password", "ssh_password"],
+
+  "builders": [
+    {
+      "type": "proxmox",
+      "proxmox_url": "{{ user `proxmox_url`}}",
+      "username": "{{user `proxmox_username`}}",
+      "password": "{{user `proxmox_password`}}",
+      "insecure_skip_tls_verify": true,
+      "node": "{{user `proxmox_node`}}",
+
+      "vm_name": "{{user `vm_name`}}v{{user `version`}}",
+      "vm_id": "{{user `vm_id_base`}}{{user `version`}}",
+
+      "os": "l26",
+
+      "boot_wait": "10s",
+      "boot_command": [
+        "<up><wait><tab><wait> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+      ],
+      "network_adapters": [
+        {
+          "bridge": "vmbr0",
+          "model": "virtio"
+        }
+      ],
+      "disks": [
+        {
+          "type": "scsi",
+          "disk_size": "10G",
+          "storage_pool": "{{user `proxmox_storage_pool`}}",
+          "storage_pool_type": "{{user `proxmox_storage_pool_type`}}",
+          "format": "{{user `proxmox_storage_format`}}"
+        }
+      ],
+      "scsi_controller": "virtio-scsi-pci",
+      "iso_file": "{{user `proxmox_iso_pool`}}/{{user `iso_file`}}",
+      "qemu_agent": true,
+
+      "cpu_type": "host",
+      "sockets": 1,
+      "cores": 1,
+      "memory": 1024,
+
+      "http_directory": "{{user `http_directory`}}",
+      "http_port_min": 10080,
+      "http_port_max": 10090,
+
+      "ssh_username": "root",
+      "ssh_password": "{{user `ssh_password`}}",
+      "ssh_port": 22,
+      "ssh_timeout": "30m",
+
+      "unmount_iso": true,
+
+      "cloud_init": true,
+      "cloud_init_storage_pool": "local",
+
+      "template_name": "{{user `template_name`}}v{{user `version`}}",
+      "template_description": "{{user `template_description`}}"
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "yum install -y git",
+        "cd /opt",
+        "git clone https://github.com/orynkanov/vm-prepare-template.git",
+        "/opt/vm-prepare-template/vm-prepare-template.sh",
+        "rm -rf /opt/vm-prepare-template"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "yum install -y cloud-init cloud-utils-growpart"
+      ]
+    }
+  ]
+}
