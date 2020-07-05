@@ -8,9 +8,6 @@ SCRIPTDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 CONFIG_DIR=$1
 export VERSION=$2
 
-# shellcheck source=/dev/null
-source "$SCRIPTDIR"/vars.cfg
-
 #start check
 if [[ ! $# -eq 2 ]]; then
     echo "Usage - packer.sh CONFIG_DIR VERSION_NUMBER"
@@ -37,6 +34,9 @@ if ! [[ $VERSION =~ $RE ]] ; then
    exit 1
 fi
 #finish check
+
+# shellcheck source=/dev/null
+source "$SCRIPTDIR"/vars.cfg
 
 if [[ -z $PROXMOX_PASSWORD ]]; then
     read -r -s -p "Enter password for proxmox login $PROXMOX_USERNAME: " PASS
