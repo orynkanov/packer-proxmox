@@ -33,7 +33,7 @@ export ISO_FILE='CentOS-7-x86_64-DVD-2003.iso'
 export SSH_PASSWORD='rootpw'
 
 if [[ -z $PROXMOX_PASSWORD ]]; then
-    read -r -s -p "Enter password for login $PROXMOX_USERNAME : " PASS
+    read -r -s -p "Enter password for proxmox login $PROXMOX_USERNAME: " PASS
     export PROXMOX_PASSWORD=$PASS
 fi
 echo
