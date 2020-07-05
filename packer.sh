@@ -29,7 +29,6 @@ fi
 
 export PROXMOX_URL='https://hyper01.yozhu.home:8006/api2/json'
 export PROXMOX_USERNAME='root@pam'
-export ISO_FILE='CentOS-7-x86_64-DVD-2003.iso'
 export SSH_PASSWORD='rootpw'
 
 if [[ -z $PROXMOX_PASSWORD ]]; then

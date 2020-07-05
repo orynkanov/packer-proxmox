@@ -13,7 +13,7 @@
     "proxmox_storage_format": "raw",
 
     "proxmox_iso_pool": "local:iso",
-    "iso_file": "{{env `ISO_FILE`}}",
+    "iso_file": "CentOS-7-x86_64-DVD-2003.iso",
 
     "vm_name": "vmtmplcentos7",
     "vm_id_base": "500",
