@@ -7,17 +7,23 @@ export VERSION=$2
 
 #start check
 if [[ ! $# -eq 2 ]]; then
-    echo "usage - packer.sh CONFIG_DIR VERSION_NUMBER"
+    echo "Usage - packer.sh CONFIG_DIR VERSION_NUMBER"
     exit 1
 fi
 
 if [[ ! -f $SCRIPTDIR/$CONFIG_DIR/packer.json ]]; then
-    echo "File $SCRIPTDIR/$CONFIG_DIR/packer.json" not found.
+    echo "File $SCRIPTDIR/$CONFIG_DIR/packer.json not found"
     exit 1
 fi
 if [[ ! -f $SCRIPTDIR/$CONFIG_DIR/ks.cfg.tmpl ]]; then
-    echo "File $SCRIPTDIR/$CONFIG_DIR/ks.cfg.tmpl" not found.
+    echo "File $SCRIPTDIR/$CONFIG_DIR/ks.cfg.tmpl not found"
     exit 1
+fi
+
+re='^[0-9]+$'
+if ! [[ $VERSION =~ $re ]] ; then
+   echo "$VERSION not number"
+   exit 1
 fi
 #finish check
 
