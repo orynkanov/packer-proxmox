@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#silent execution:
+#export PROXMOX_PASSWORD='PASSWORD'
+
 SCRIPTDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 CONFIG_DIR=$1
@@ -20,8 +23,8 @@ if [[ ! -f $SCRIPTDIR/$CONFIG_DIR/ks.cfg.tmpl ]]; then
     exit 1
 fi
 
-re='^[0-9]+$'
-if ! [[ $VERSION =~ $re ]] ; then
+RE='^[0-9]+$'
+if ! [[ $VERSION =~ $RE ]] ; then
    echo "$VERSION not number"
    exit 1
 fi
