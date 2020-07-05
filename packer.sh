@@ -8,11 +8,11 @@ if [[ ! $# -eq 2 ]]; then
     exit 1
 fi
 
-if [[ -f $SCRIPTDIR/$CONFIG_DIR/packer.json ]]; then
+if [[ ! -f $SCRIPTDIR/$CONFIG_DIR/packer.json ]]; then
     echo "File $SCRIPTDIR/$CONFIG_DIR/packer.json" not found.
     exit 1
 fi
-if [[ -f $SCRIPTDIR/$CONFIG_DIR/ks.cfg.tmpl ]]; then
+if [[ ! -f $SCRIPTDIR/$CONFIG_DIR/ks.cfg.tmpl ]]; then
     echo "File $SCRIPTDIR/$CONFIG_DIR/ks.cfg.tmpl" not found.
     exit 1
 fi
