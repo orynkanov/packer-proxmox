@@ -4,7 +4,7 @@
     "proxmox_username": "{{env `PROXMOX_USERNAME`}}",
     "proxmox_password": "{{env `PROXMOX_PASSWORD`}}",
     
-    "proxmox_node": "hyper01",
+    "proxmox_node": "{{env `PROXMOX_NODE`}}",
 
     "http_directory": "centos7",
 

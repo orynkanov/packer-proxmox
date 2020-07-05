@@ -33,6 +33,7 @@ fi
 export PROXMOX_URL='https://hyper01.yozhu.home:8006/api2/json'
 export PROXMOX_USERNAME='root@pam'
 export SSH_PASSWORD='rootpw'
+export PROXMOX_NODE='hyper01'
 
 if [[ -z $PROXMOX_PASSWORD ]]; then
     read -r -s -p "Enter password for proxmox login $PROXMOX_USERNAME: " PASS
