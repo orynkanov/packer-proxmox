@@ -2,6 +2,9 @@
 
 SCRIPTDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
+CONFIG_DIR=$1
+export VERSION=$2
+
 #start check
 if [[ ! $# -eq 2 ]]; then
     echo "usage - packer.sh CONFIG_DIR VERSION_NUMBER"
@@ -18,8 +21,6 @@ if [[ ! -f $SCRIPTDIR/$CONFIG_DIR/ks.cfg.tmpl ]]; then
 fi
 #finish check
 
-CONFIG_DIR=$1
-export VERSION=$2
 export PROXMOX_URL='https://hyper01.yozhu.home:8006/api2/json'
 export PROXMOX_USERNAME='root@pam'
 export ISO_FILE='CentOS-7-x86_64-DVD-2003.iso'
