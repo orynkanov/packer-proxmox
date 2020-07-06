@@ -81,7 +81,7 @@
       "unmount_iso": true,
 
       "cloud_init": true,
-      "cloud_init_storage_pool": "local",
+      "cloud_init_storage_pool": "{{user `proxmox_storage_pool`}}",
 
       "template_name": "{{user `template_name`}}v{{user `version`}}",
       "template_description": "{{user `template_description`}}"
